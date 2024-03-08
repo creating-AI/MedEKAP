@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Products</title>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!--Box title + description-->
+    <div class="align-items-center shadow p-3 my-3 bg-secondary rounded">
+      <div class="lh-base">
+        <h6 class="mb-0 text-white lh-base">Medi Kit</h6>
+        <small class="text-white">The Medi Kit contains all the necessary products for an emergency and displays the products currently in stock.</small>
+      </div>
+    </div>
+
+    <!--Medi Kit Location: view and edit-->
+    <form  [formGroup]="locForm" (ngSubmit)="submit()" class="row d-flex justify-content-center mb-3 align-items-center">
+      <div class="col-auto" *ngFor="let location of location">
+        <div type="text" readonly class="form-control-plaintext"><strong>Medi Kit </strong><span class="bi bi-geo-alt-fill"></span><strong>: </strong>{{location.location}}</div>
+      </div>
+      <div *ngIf="showLocationEditor" class="col-auto form-group">
+        <input id="location" formControlName="location" type="text" name="location" class="form-control form-control-sm" required>
+      </div>
+      <div *ngIf="showLocationEditor" class="col-auto form-group">
+        <button [disabled]="!locForm.valid" class="btn btn-outline-secondary btn-sm" type="submit">Update</button>
+      </div>
+      <div class="col-auto">
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="toggleLocationEditor()"><span class="bi bi-pencil-fill"></span></button>
+      </div>
+    </form>
+
+    <!--Notification: lowStock-->  
+    <div *ngIf="showStockAlert" class="alert alert-danger" role="alert" >
+      <h5 style="color: crimson;"><span class="bi bi-bell-fill"></span> Low Stock Alert</h5>
+      <div *ngFor="let lowStock of lowStock">
+        <div><strong>- {{lowStock.name}}</strong> has a quantity minimum of {{lowStock.quantity_min}}, <strong>actual stock: {{lowStock.quantity_stock}}</strong></div>
+      </div>
+    </div>
+
+    <!--Notification: outOfDate-->
+    <div *ngIf="showOutOfDateAlert" class="alert alert-danger" role="alert" >
+      <h5 style="color: crimson;"><span class="bi bi-bell-fill"></span> Expired Alert</h5>
+      <div *ngFor="let outOfDate of outOfDate">
+        <div><strong>- {{outOfDate.name}}</strong> has {{outOfDate.quantity}} items which are <strong> expired since {{outOfDate.expiration_date}}</strong></div>
+      </div>
+    </div>
+
+    <!--Products box-->
+    <div class="shadow p-3 my-3 bg-white rounded">
+      
+      <!--Add & Refresh buttons-->
+      <div class="d-grid gap-1 d-md-flex justify-content-md-start mb-3">
+        <button type="button" class="btn btn-outline-primary shadow-sm btn-float" routerLink="/add"><span class="bi bi-plus-lg"></span></button>
+        <button type="button" class="btn btn-outline-primary shadow-sm btn-float" (click)="ngOnInit()"><span class="bi bi-arrow-clockwise"></span></button>
+        <button type="button" class="btn btn-outline-primary shadow-sm btn-float" routerLink="/inventory"><span class="bi bi-printer"></span></button>
+      </div>
+
+      <!--Table to display all Products-->
+      <div class="col-md-12 overflow-auto" style="max-height: 20em;">
+        <table class="table table-hover table-responsive table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Quantity Min</th>
+              <th scope="col">Quantity Max</th>
+              <th scope="col">Quantity In Stock</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of products">
+              <th scope="row">{{product.id}}</th>
+              <td>{{product.name}}</td>
+              <td>{{product.quantity_min}}</td>
+              <td>{{product.quantity_max}}</td>
+              <td>{{product.quantity_stock}}</td>
+              <td>
+                <div class="d-grid gap-1 d-md-flex justify-content-md-start" data-toggle="buttons">
+                <button class="btn btn-outline-secondary btn-sm" (click)="viewInventoryById(product.id)" (click)='toggleShow()'>
+                  <span class="bi bi-eye-fill"></span></button>
+                <button class="btn btn-outline-secondary btn-sm" routerLink="/update/{{product.id}}">
+                  <span class="bi bi-pencil-fill"></span></button>
+                <button class="btn btn-outline-danger btn-sm" (click)="deleteProduct(product.id)">
+                  <span class="bi bi-trash3-fill"></span></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!--Inventory by Id Box showing-->
+      <div *ngIf="show" class="shadow-sm p-3 mt-4 bg-light rounded">
+        <div class="d-grid gap-3 d-md-flex justify-content-between mb-3">
+          <h5 *ngIf="show" class="text-center">{{product.name}}</h5>
+          <button class="btn btn-outline-primary btn-sm" routerLink="/addinventory/{{product.id}}">
+            <span class="bi bi-plus-lg"></span></button>
+        </div>
+        
+        <!--Table with Inventory by Id-->
+        <div *ngIf="show" class="col-md-12 overflow-auto" style="max-height: 15em;">
+          <table *ngIf="show" class="table table-hover table-responsive table-light table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Product</th>
+                <th scope="col">Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Expiration Date</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let inventory of inventory">
+                <th scope="row">{{inventory.id}}</th>
+                <td>{{inventory.product}}</td>
+                <td>{{product.name}}</td>
+                <td>{{inventory.quantity}}</td>
+                <td>{{inventory.expiration_date}}</td>
+                <td>
+                  <div class="d-grid gap-1 d-md-flex justify-content-md-start" data-toggle="buttons">
+                    <button class="btn btn-outline-secondary btn-sm" routerLink="/updateinventory/{{inventory.id}}">
+                      <span class="bi bi-pencil-fill"></span></button>
+                    <button class="btn btn-outline-danger btn-sm" (click)="deleteInventory(inventory.id, inventory.product)">
+                      <span class="bi bi-trash3-fill"></span></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!--Button to add Inventory by Id-->
+        <div class="d-grid">
+          <button class="btn btn-outline-primary btn-sm" routerLink="/addinventory/{{product.id}}">
+            <span class="bi bi-plus-lg"></span> Add more {{product.name}} to inventory</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>

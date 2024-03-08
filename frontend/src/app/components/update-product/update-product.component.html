@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Product</title>
+</head>
+<body>
+
+  <div class="container">
+
+    <!--Box title + description-->
+    <div class="align-items-center shadow p-3 my-3 bg-secondary rounded">
+      <div class="lh-base">
+        <h6 class="mb-0 text-white lh-base">Medi Kit</h6>
+        <small class="text-white">The Medi Kit contains all the necessary products for an emergency and displays the products currently in stock.</small>
+      </div>
+    </div>
+    <!--Form to update product type properties-->
+    <div class="shadow p-3 m-5 bg-white rounded mx-auto w-50" style="max-width:100%;">
+      <h3 class="text-center mb-3">Update Product Properties</h3>
+      <form  [formGroup]="form" (ngSubmit)="submit()" >
+
+        <!--Name-->
+        <div class="row">
+            <div class="col-md-12 form-group mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input id="name"  formControlName="name"  type="text" name="name" class="form-control" [ngModel]="product?.name" required>
+            </div>
+          </div>
+        
+        <!--Quantity Min-->
+        <div class="row">
+          <div class="col-md-12 form-group mb-3">
+            <label for="quantity_min" class="form-label">Quantity Min</label>
+            <input id="quantity_min"  formControlName="quantity_min" type="number" name="quantity_min" class="form-control" [ngModel]="product?.quantity_min" required>
+          </div>
+        </div>
+
+        <!--Quantity Max-->
+        <div class="row">
+          <div class="col-md-12 form-group mb-3">
+            <label for="quantity_max" class="form-label">Quantity Max</label>
+            <input id="quantity_max"  formControlName="quantity_max" type="number" name="quantity_max" class="form-control" [ngModel]="product?.quantity_max" required>
+          </div>
+        </div>
+
+        <!--Buttons-->
+        <div class="col-md-12 d-flex justify-content-betweend-flex justify-content-between">
+          <button [disabled]="!form.valid" class="btn btn-primary" type="submit"><span class="bi bi-check-lg"></span> Save</button>
+          <button class="btn btn-outline-primary" type="cancel" routerLink="/"><span class="bi bi-x-lg"></span> Cancel</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</body>
+</html>

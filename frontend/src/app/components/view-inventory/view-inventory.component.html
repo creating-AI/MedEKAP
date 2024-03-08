@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Inventory Items</title>
+</head>
+<body>
+
+  <div class="container"> 
+    
+    <!--Box title + description-->
+    <div class="align-items-center shadow p-3 my-3 bg-secondary rounded">
+      <div class="lh-base">
+        <h6 class="mb-0 text-white lh-base">Medi Kit</h6>
+        <small class="text-white">The Medi Kit contains all the necessary products for an emergency and displays the products currently in stock.</small>
+      </div>
+    </div>
+
+    <!--Box + Subtitle + Print Button + Table-->
+    <div class="shadow p-3 my-3 bg-white rounded">
+      <div class="col-md-12">
+
+        <!--Buttons-->
+        <div class="d-grid gap-1 d-md-flex d-flex justify-content-betweend-flex justify-content-between">
+          <button type="button" class="btn btn-outline-primary shadow-sm" routerLink="/"><span class="bi bi-arrow-left"></span></button>
+          <h5 class="text-center">Medi Kit Inventory</h5>
+          <button type="button" class="btn btn-outline-primary shadow-sm" (click)="printPDF()"><span class="bi bi-download"> PDF</span></button>
+        </div>
+
+        <!--Table to display all the products-->
+        <table id= "inventory_table" class="table table-responsive">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Expiration Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let allData of allData">
+              <td scope="row">{{allData.name}}</td>
+              <td>{{allData.quantity}}</td>
+              <td>{{allData.expiration_date}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>

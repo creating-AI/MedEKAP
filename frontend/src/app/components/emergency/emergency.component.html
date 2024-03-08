@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency</title>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!--Box title + description-->
+    <div class="align-items-center shadow p-3 my-3 bg-secondary rounded">
+        <div class="d-flex justify-content-betweend-flex justify-content-between">
+
+            <div class="lh-base">
+                <h6 class="mb-0 text-white lh-base">Emergency</h6>
+                <small class="text-white">Select the type of emergency for further instructions.</small>
+            </div>
+
+            <!--Emergency buttons-->
+            <div *ngIf="showEmergencySelection" class="d-grid gap-3 d-md-flex justify-content-md-start">
+                <button type="button" class="btn btn-danger btn-lg shadow-sm" (click)="emergencyCase(1)" (click)="setActionPlanVisible()" title="Heart Attack"><span class="bi bi-heart-pulse-fill"></span></button>
+                <button type="button" class="btn btn-danger btn-lg shadow-sm" (click)="emergencyCase(2)" (click)="setActionPlanVisible()" title="Apnea"><span class="bi bi-lungs-fill"></span></button>
+                <button type="button" class="btn btn-danger btn-lg shadow-sm" (click)="emergencyCase(3)" (click)="setActionPlanVisible()" title="Severe Bleeding"><span class="bi bi-droplet-fill"></span></button>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="showActionPlan" class="row">
+            <div class="col">
+
+                <!--[left] Action plan box with shadows-->
+                <div class="shadow p-3 my-3 bg-white rounded">
+                    <div class="d-flex gap-1">
+                        <h5>{{case.title}}</h5> 
+                        <h5>Action Plan</h5>
+                    </div>
+                    <div class="text-break">{{case.default}}</div>
+                    <hr>
+                    <form [formGroup]="form" (ngSubmit)="updateCase()">
+                        <div class="d-flex justify-content-betweend-flex justify-content-between">
+                            <h5>Custom Action Notes</h5>
+                            <div class="d-flex gap-2">
+                                <button *ngIf="showCustomEditor" type="submit" class="btn btn-outline-secondary btn-sm"><span class="bi bi-check-lg"></span> Save</button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm" (click)="toggleCustomEditor(customTextArea)"><span class="bi bi-pencil-fill"></span></button> 
+                            </div>
+                        </div>
+                        <div class="my-1 text-break">{{case.custom}}</div>
+                        <div class="form-group">
+                            <textarea #customTextArea hidden="true" class="form-control" id="customTextArea" formControlName="custom" rows="4" maxlength="1000" [value]=case.custom placeholder="Enter your individual action plan here (max. 1000 characters)"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col col-md-auto">
+
+                <!--[right] Generate protocol Button-->
+                <div class="d-grid my-3">
+                    <button type="button" class="btn btn-outline-primary btn-sm shadow" (click)="toggleProtocolForm()" (click)="toggleEmergencySelection()" (click)="setCustomEditorOff(customTextArea)" (click)="setActionPlanNotVisible()"><span class="bi bi-file-text"> Generate Protocol</span></button> 
+                </div>
+
+                <!--[right] Medication box with shadows-->            
+                <div class="shadow p-3 my-3 bg-white rounded">
+                    <h5>Medication</h5>
+                    
+                    <ul class="list-group" label="Available">
+                        <div *ngFor="let availableMed of availableMed">
+                            <li class="list-group-item text-success"><span class="bi bi-check"></span> {{availableMed}} [Available]</li>
+                        </div>
+                    </ul>
+                    <ul class="list-group">
+                        <div *ngFor="let notAvailableMed of notAvailableMed">
+                            <li class="list-group-item text-danger"><span class="bi bi-x"></span> {{notAvailableMed}} [Not Available]</li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Protocol generator -->
+        <div *ngIf="showProtocolForm">
+
+            <!-- Protocol buttons -->
+            <div class="col-md-12">
+                <div class="d-grid gap-1 d-md-flex d-flex justify-content-betweend-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-primary shadow-sm" (click)="setActionPlanVisible()" (click)="toggleEmergencySelection()" (click)="toggleProtocolForm()"><span class="bi bi-arrow-left"></span></button>
+                    <h5 class="text-center">Paramedics protocol editor</h5>
+                    <button type="button" class="btn btn-outline-primary shadow-sm" (click)="printPDF()"><span class="bi bi-download"> PDF</span></button>     
+                </div>
+            </div>
+
+            <!-- Protocol form -->
+            <div class="shadow p-3 my-3 bg-white" style="aspect-ratio: 210 / 297; max-width: 50%; min-width: 436px; margin: 0 auto;">
+                <div id="protocol" class="container" style="aspect-ratio: 210 / 297; max-width: 100%;">
+                    <h3 p-3 style="color: red;">Paramedics protocol</h3>
+                    <hr>
+                    <div class="row g-2 align-items-top my-1">
+                        <div class="col-3">
+                            <div><strong>Patient name</strong></div>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="form-control" contenteditable="true" onkeypress="return(this.innerText.length<=30)"></div>
+                        </div>
+                    </div>
+                    <div class="row g-2 align-items-top my-1">
+                        <div class="col-3">
+                            <div><strong>Date of birth</strong></div>
+                        </div>
+                        <div class="col-auto">
+                            <input type=Date class="form-control">
+                        </div>
+                    </div>
+                    <div class="row g-2 align-items-top my-1">
+                        <div class="col-3">
+                        <div><strong>Medication</strong></div>
+                        </div>
+                        <div class="col-9">
+                            <div *ngFor="let availableMed of availableMed">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">{{availableMed}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-2 align-items-top my-1">
+                        <div class="col-3">
+                            <div><strong>Measures</strong></div>
+                        </div>
+                        <div class="col-9">
+                            <div class="form-control" contenteditable="true" onkeypress="return(this.innerText.length<=250)"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

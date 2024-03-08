@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Inventory</title>
+</head>
+<body>
+
+  <div class="container">
+        
+    <!--Box title + description-->
+    <div class="align-items-center shadow p-3 my-3 bg-secondary rounded">
+        <div class="lh-base">
+          <h6 class="mb-0 text-white lh-base">Medi Kit</h6>
+          <small class="text-white">The Medi Kit contains all the necessary products for an emergency and displays the products currently in stock.</small>
+        </div>
+    </div>
+    
+    <!--Form to update inventory items properties-->
+    <div class="shadow p-3 m-5 bg-white rounded mx-auto w-50" style="max-width:100%;">
+      <h2 class="text-center mb-3">Update Inventory</h2>
+      <form  [formGroup]="form" (ngSubmit)="submit()">
+
+        <!--Product-->
+        <div class="row" style="display: none;">
+          <div class="col-md-12 form-group mb-3">
+            <label for="product" class="form-label">Product</label>
+            <input id="product"  formControlName="product"  type="text" name="product" class="form-control" [ngModel]="inventory?.product" required>
+          </div>
+        </div>
+        
+        <!--Quantity-->
+        <div class="row">
+          <div class="col-md-12 form-group mb-3">
+            <label for="quantity" class="form-label">Quantity</label>
+            <input id="quantity"  formControlName="quantity" type="number" name="quantity" class="form-control" [ngModel]="inventory?.quantity" required>
+          </div>
+        </div>
+
+        <!--Expiration Date-->
+        <div class="row">
+          <div class="col-md-12 form-group mb-3">
+            <label for="expiration_date" class="form-label">Expiration Date</label>
+            <input id="expiration_date"  formControlName="expiration_date" type="date" name="expiration_date" class="form-control" [ngModel]="inventory?.expiration_date" required>
+          </div>
+        </div>
+
+        <!--Buttons-->
+        <div class="col-md-12 d-flex justify-content-betweend-flex justify-content-between">
+          <button [disabled]="!form.valid" class="btn btn-primary" type="submit"><span class="bi bi-check-lg"></span> Save</button>
+          <button class="btn btn-outline-primary" type="cancel" routerLink="/"><span class="bi bi-x-lg"></span> Cancel</button>
+        </div>
+      </form>
+        
+    </div>
+  </div>
+</body>
+</html>
