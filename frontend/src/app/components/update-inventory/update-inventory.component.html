@@ -20,7 +20,7 @@
     
     <!--Form to update inventory items properties-->
     <div class="shadow p-3 m-5 bg-white rounded mx-auto w-50" style="max-width:100%;">
-      <h2 class="text-center mb-3">Update Inventory</h2>
+      <h2 class="text-center mb-3">Update inventory items</h2>
       <form  [formGroup]="form" (ngSubmit)="submit()">
 
         <!--Product-->
@@ -52,8 +52,7 @@
           <button [disabled]="!form.valid" class="btn btn-primary" type="submit"><span class="bi bi-check-lg"></span> Save</button>
           <button class="btn btn-outline-primary" type="cancel" routerLink="/"><span class="bi bi-x-lg"></span> Cancel</button>
         </div>
-      </form>
-        
+      </form> 
     </div>
   </div>
 </body>

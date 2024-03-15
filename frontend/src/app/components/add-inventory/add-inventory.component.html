@@ -23,7 +23,7 @@
         
         <!--Form to add items to inventory-->
         <div class="shadow p-3 m-5 bg-white rounded mx-auto w-50" style="max-width:100%;">
-            <h3 class="text-center mb-3">Add Item To Inventory</h3>
+            <h3 class="text-center mb-3">Add new items to inventory</h3>
             <form [formGroup]="form" (ngSubmit)="addInventory()">
 
                 <!--Product-->
@@ -38,7 +38,7 @@
                 <div class="row">
                     <div class="col-md-12 form-group mb-3">
                         <label for="quantity" class="form-label">Quantity</label>
-                        <input id="quantity" type="quantity"  formControlName="quantity" name="quantity" class="form-control" placeholder="Enter product quantity" required>
+                        <input id="quantity" type="quantity"  formControlName="quantity" name="quantity" class="form-control" placeholder="Enter number of items" required>
                     </div>
                 </div>
 

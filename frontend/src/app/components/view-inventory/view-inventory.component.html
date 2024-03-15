@@ -23,13 +23,14 @@
       <div class="col-md-12">
 
         <!--Buttons-->
-        <div class="d-grid gap-1 d-md-flex d-flex justify-content-betweend-flex justify-content-between">
+        <div class="d-grid gap-1 d-md-flex d-flex justify-content-betweend-flex justify-content-between mb-3">
           <button type="button" class="btn btn-outline-primary shadow-sm" routerLink="/"><span class="bi bi-arrow-left"></span></button>
           <h5 class="text-center">Medi Kit Inventory</h5>
           <button type="button" class="btn btn-outline-primary shadow-sm" (click)="printPDF()"><span class="bi bi-download"> PDF</span></button>
         </div>
 
         <!--Table to display all the products-->
+        <div class="col-md-12 overflow-auto" style="max-height: 30em;">
         <table id= "inventory_table" class="table table-responsive">
           <thead>
             <tr>
@@ -46,7 +47,7 @@
             </tr>
           </tbody>
         </table>
-
+      </div>
       </div>
     </div>
   </div>
