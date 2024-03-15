@@ -64,19 +64,19 @@
       <!--Table to display all Products-->
       <div class="col-md-12 overflow-auto" style="max-height: 20em;">
         <table class="table table-hover table-responsive table-bordered">
-          <thead>
+          <thead style="position: sticky; top: 0%;">
             <tr>
-              <th scope="col">Id</th>
+              <!--dev <th scope="col">Id</th> -->
               <th scope="col">Name</th>
               <th scope="col">Quantity Min</th>
               <th scope="col">Quantity Max</th>
               <th scope="col">Quantity In Stock</th>
-              <th scope="col">Action</th>
+              <th scope="col" class="col-1">Action</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let product of products">
-              <th scope="row">{{product.id}}</th>
+              <!--dev <th scope="row">{{product.id}}</th> -->
               <td>{{product.name}}</td>
               <td>{{product.quantity_min}}</td>
               <td>{{product.quantity_max}}</td>
@@ -99,28 +99,28 @@
       <!--Inventory by Id Box showing-->
       <div *ngIf="show" class="shadow-sm p-3 mt-4 bg-light rounded">
         <div class="d-grid gap-3 d-md-flex justify-content-between mb-3">
-          <h5 *ngIf="show" class="text-center">{{product.name}}</h5>
+          <h5 *ngIf="show">{{product.name}}</h5>
           <button class="btn btn-outline-primary btn-sm" routerLink="/addinventory/{{product.id}}">
-            <span class="bi bi-plus-lg"></span></button>
+            <span class="bi bi-plus-lg"></span> Add more {{product.name}} to inventory</button>
         </div>
         
         <!--Table with Inventory by Id-->
         <div *ngIf="show" class="col-md-12 overflow-auto" style="max-height: 15em;">
           <table *ngIf="show" class="table table-hover table-responsive table-light table-bordered">
-            <thead>
+            <thead style="position: sticky; top: 0%;">
               <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Product</th>
+                <!--dev <th scope="col">Id</th>
+                <th scope="col">Product</th> -->
                 <th scope="col">Name</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Expiration Date</th>
-                <th scope="col">Action</th>
+                <th scope="col" class="col-1">Action</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let inventory of inventory">
-                <th scope="row">{{inventory.id}}</th>
-                <td>{{inventory.product}}</td>
+                <!--dev <th scope="row">{{inventory.id}}</th>
+                <td>{{inventory.product}}</td> -->
                 <td>{{product.name}}</td>
                 <td>{{inventory.quantity}}</td>
                 <td>{{inventory.expiration_date}}</td>
@@ -136,13 +136,6 @@
             </tbody>
           </table>
         </div>
-
-        <!--Button to add Inventory by Id-->
-        <div class="d-grid">
-          <button class="btn btn-outline-primary btn-sm" routerLink="/addinventory/{{product.id}}">
-            <span class="bi bi-plus-lg"></span> Add more {{product.name}} to inventory</button>
-        </div>
-
       </div>
     </div>
   </div>
