@@ -17,7 +17,7 @@ export class AddInventoryComponent {
     private route: ActivatedRoute, 
     private router : Router) { }
 
-  /* Get id from route to use it as a prefill for form product */
+  /** Get the ID from the route to retrieve product data that will be used as form prefill */
   ngOnInit(): void { 
     let id = this.route.snapshot.params['id'];
     this.service.getProduct(id).subscribe(data => {
@@ -31,6 +31,7 @@ export class AddInventoryComponent {
     expiration_date: new FormControl(Date),
   });
 
+  /** Add a new item to inventory using the data from the form */
   addInventory() {
     this.data = this.form.value;
     this.service.addInventory(this.data).subscribe(data => {

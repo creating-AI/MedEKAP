@@ -23,6 +23,7 @@ export class AddProductComponent {
     quantity_stock: new FormControl('0')
   });
 
+  /** Add a new product type using the data from the form */
   addProduct() {
     this.data = this.form.value;
     this.service.addProduct(this.data).subscribe(data => {
