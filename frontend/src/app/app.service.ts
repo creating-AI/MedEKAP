@@ -12,6 +12,7 @@ import { Medication } from './Medication';
 
 export class Service {
 
+  /** URLs used to access the backend */
   private url_products: string = 'http://localhost:8000/api/products/';
   private url_inventory: string = 'http://localhost:8000/api/inventory/';
   private url_inventorylistbyid: string = 'http://localhost:8000/api/inventorylistbyid/';
@@ -22,6 +23,7 @@ export class Service {
 
   constructor(private http: HttpClient) { }
 
+  /** Services related to emergencies and associated medication */
   getMedicationListById(id: number): Observable<Medication[]> {
     return this.http.get<Medication[]>(`${this.url_medicationlistbyid}${id}/`);
   }
@@ -39,7 +41,7 @@ export class Service {
   }
 
   
-  
+  /** Product (type) related services */
   getProducts(): Observable<Products[]> {
     return this.http.get<Products[]>(this.url_products);
   }
@@ -61,7 +63,7 @@ export class Service {
   }
 
   
-  
+  /** Inventory (item) related services */
   addInventory(inventory: Inventory): Observable<Inventory> {
     return this.http.post<Inventory>(this.url_inventory, inventory);
   }
@@ -87,7 +89,7 @@ export class Service {
   }
 
 
-
+ /** Medi Kit location related services */
   getLocation(): Observable<Location> {
     return this.http.get<Location>(this.url_location);
   }

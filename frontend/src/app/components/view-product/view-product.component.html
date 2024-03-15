@@ -56,7 +56,7 @@
       
       <!--Add & Refresh buttons-->
       <div class="d-grid gap-1 d-md-flex justify-content-md-start mb-3">
-        <button type="button" class="btn btn-outline-primary shadow-sm btn-float" routerLink="/add"><span class="bi bi-plus-lg"></span></button>
+        <button type="button" class="btn btn-outline-primary shadow-sm btn-float" routerLink="/addproduct"><span class="bi bi-plus-lg"></span></button>
         <button type="button" class="btn btn-outline-primary shadow-sm btn-float" (click)="ngOnInit()"><span class="bi bi-arrow-clockwise"></span></button>
         <button type="button" class="btn btn-outline-primary shadow-sm btn-float" routerLink="/inventory"><span class="bi bi-printer"></span></button>
       </div>
@@ -85,7 +85,7 @@
                 <div class="d-grid gap-1 d-md-flex justify-content-md-start" data-toggle="buttons">
                 <button class="btn btn-outline-secondary btn-sm" (click)="viewInventoryById(product.id)" (click)='toggleShow()'>
                   <span class="bi bi-eye-fill"></span></button>
-                <button class="btn btn-outline-secondary btn-sm" routerLink="/update/{{product.id}}">
+                <button class="btn btn-outline-secondary btn-sm" routerLink="/updateproduct/{{product.id}}">
                   <span class="bi bi-pencil-fill"></span></button>
                 <button class="btn btn-outline-danger btn-sm" (click)="deleteProduct(product.id)">
                   <span class="bi bi-trash3-fill"></span></button>

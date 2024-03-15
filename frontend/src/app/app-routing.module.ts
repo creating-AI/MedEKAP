@@ -9,15 +9,19 @@ import { ViewInventoryComponent } from './components/view-inventory/view-invento
 import { EmergencyComponent } from './components/emergency/emergency.component';
 
 const routes: Routes = [
-  {path: '', component: ViewProductComponent},
-  {path: 'add', component: AddProductComponent},
-  {path: 'update/:id', component: UpdateProductComponent},
-
+  /** home */
+  {path: '', component: ViewProductComponent}, 
+  /** printable complete inventory list */
   {path: 'inventory', component: ViewInventoryComponent},
-  {path: 'addinventory', component: AddInventoryComponent},
+  /** add a product type form */
+  {path: 'addproduct', component: AddProductComponent},
+  /** update a product type form; id = product type id */
+  {path: 'updateproduct/:id', component: UpdateProductComponent},
+  /** add an inventory item form; id = product id (to relate the item to a type) */
   {path: 'addinventory/:id', component: AddInventoryComponent},
+  /** update an inventory item form; id = inventory item id */
   {path: 'updateinventory/:id', component: UpdateInventoryComponent},
-
+  /** all emergency content at one place */
   {path: 'emergency', component: EmergencyComponent},
 ];
 
