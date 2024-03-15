@@ -3,6 +3,7 @@ from .views import InventoryList, InventoryDetail, ProductsList, ProductsDetail,
 from .views import MediKitLocation, MediKitLocationDetail
 from .views import EmergencyList, EmergencyDetail, MedicationList, MedicationDetail, MedicationListById
 
+# URLs for view interaction
 urlpatterns = [
     path('products/', ProductsList.as_view(), name="products_list"),
     path('products/<int:pk>/', ProductsDetail.as_view(), name='products_detail'),

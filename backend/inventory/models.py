@@ -1,6 +1,6 @@
 from django.db import models
 
-# Holds the product classes
+# Product types
 class Products(models.Model):
     name = models.CharField(max_length=100)
     quantity_min = models.IntegerField()
@@ -10,7 +10,7 @@ class Products(models.Model):
     def __str__(self):
         return self.name
 
-# Itemdetails
+# Holds inventory items related to products
 class Inventory(models.Model):
     product = models.ForeignKey(Products, blank=True, null=True, on_delete=models.CASCADE)
     quantity = models.IntegerField()
@@ -35,7 +35,7 @@ class Emergency(models.Model):
     def __str__(self):
         return self.title
     
-# Medication for Emergency cases
+# Holds medication related to emergency cases
 class Medication(models.Model):
     emergency = models.ForeignKey(Emergency, blank=True, null=True, on_delete=models.CASCADE)
     medicine = models.CharField(max_length=100)
