@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
 
+  showNavbar: boolean = true
+
+  /** Expand and collapse the navigation bar by clicking the toggle icon */
+  toggleNavbar() {
+    this.showNavbar = !this.showNavbar;
+  }
 }
