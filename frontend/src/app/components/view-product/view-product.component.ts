@@ -8,7 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrl: './view-product.component.css'
 })
 export class ViewProductComponent {
-  product: any | undefined
+  product = {id:0, name:''}
   products: any | undefined
   inventory: any | undefined
   inventoryAll: any | undefined

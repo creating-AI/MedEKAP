@@ -11,7 +11,7 @@ import html2canvas from 'html2canvas';
 })
 
 export class EmergencyComponent {
-  case: any | undefined
+  case = {id:0, title:'', default:'', custom:''}
   data: any
   medication: any | undefined
   products: any | undefined
