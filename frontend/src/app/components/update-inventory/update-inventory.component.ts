@@ -18,6 +18,9 @@ export class UpdateInventoryComponent {
     private route: ActivatedRoute, 
     private router : Router) {}
 
+  /** On init load inventory item by id and use the data to
+   * prefill the update form
+   */
   ngOnInit(): void {
     let id = this.route.snapshot.params['id'];
     this.service.getInventoryById(id).subscribe(data => {
@@ -31,6 +34,7 @@ export class UpdateInventoryComponent {
     expiration_date: new FormControl('', Validators.required)
   })
 
+  /** Get update data from form and init DB update  */
   submit(){
     this.data = this.form.value
     this.inventory.product = this.data.product

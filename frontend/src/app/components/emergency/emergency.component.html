@@ -22,9 +22,9 @@
 
             <!--Emergency buttons-->
             <div *ngIf="showEmergencySelection" class="d-grid gap-3 d-md-flex justify-content-md-start">
-                <button type="button" class="btn btn-danger btn-lg shadow-sm" (click)="emergencyCase(1)" (click)="setActionPlanVisible()" title="Heart Attack"><span class="bi bi-heart-pulse-fill"></span></button>
-                <button type="button" class="btn btn-danger btn-lg shadow-sm" (click)="emergencyCase(2)" (click)="setActionPlanVisible()" title="Apnea"><span class="bi bi-lungs-fill"></span></button>
-                <button type="button" class="btn btn-danger btn-lg shadow-sm" (click)="emergencyCase(3)" (click)="setActionPlanVisible()" title="Severe Bleeding"><span class="bi bi-droplet-fill"></span></button>
+                <button type="button" class="btn btn-danger btn-lg shadow-sm" (click)="emergencyCase(1)" title="Heart Attack"><span class="bi bi-heart-pulse-fill"></span></button>
+                <button type="button" class="btn btn-danger btn-lg shadow-sm" (click)="emergencyCase(2)" title="Apnea"><span class="bi bi-lungs-fill"></span></button>
+                <button type="button" class="btn btn-danger btn-lg shadow-sm" (click)="emergencyCase(3)" title="Severe Bleeding"><span class="bi bi-droplet-fill"></span></button>
                 </div>
             </div>
         </div>
@@ -32,14 +32,14 @@
         <div *ngIf="showActionPlan" class="row">
             <div class="col">
 
-                <!--[left] Action plan box with shadows-->
+                <!--[left] Action plan box-->
                 <div class="shadow p-3 my-3 bg-white rounded">
-                    <div class="d-flex gap-1">
-                        <h5>{{case.title}}</h5> 
-                        <h5>Action Plan</h5>
-                    </div>
+                    <!--Title and default action plan-->
+                    <h5>{{case.title}} Action Plan</h5>
                     <div class="text-break">{{case.default}}</div>
                     <hr>
+
+                    <!--Custom action plan: editor & text-->
                     <form [formGroup]="form" (ngSubmit)="updateCase()">
                         <div class="d-flex justify-content-betweend-flex justify-content-between">
                             <h5>Custom Action Notes</h5>
@@ -62,7 +62,7 @@
                     <button type="button" class="btn btn-outline-primary btn-sm shadow" (click)="toggleProtocolForm()" (click)="toggleEmergencySelection()" (click)="setCustomEditorOff(customTextArea)" (click)="setActionPlanNotVisible()"><span class="bi bi-file-text"> Generate Protocol</span></button> 
                 </div>
 
-                <!--[right] Medication box with shadows-->            
+                <!--[right] Medication box-->            
                 <div class="shadow p-3 my-3 bg-white rounded">
                     <h5>Medication</h5>
                     
@@ -88,7 +88,7 @@
                 <div class="d-grid gap-1 d-md-flex d-flex justify-content-betweend-flex justify-content-between">
                     <button type="button" class="btn btn-outline-primary shadow-sm" (click)="setActionPlanVisible()" (click)="toggleEmergencySelection()" (click)="toggleProtocolForm()"><span class="bi bi-arrow-left"></span></button>
                     <h5 class="text-center">Paramedics protocol editor</h5>
-                    <button type="button" class="btn btn-outline-primary shadow-sm" (click)="printPDF()"><span class="bi bi-download"> PDF</span></button>     
+                    <button type="button" class="btn btn-outline-primary shadow-sm" (click)="printProtocolPDF()"><span class="bi bi-download"> PDF</span></button>     
                 </div>
             </div>
 

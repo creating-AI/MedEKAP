@@ -19,6 +19,7 @@ export class ViewInventoryComponent {
     ) { 
   }
 
+  /** On init load product types and inventory items; call completeInventory() */
   ngOnInit(): void {
     this.service.getProducts().subscribe(data => {
       this.products = data;
@@ -32,16 +33,17 @@ export class ViewInventoryComponent {
     });
   }
 
-  /*Determine the complete Medi Kit inventory*/
+  /** Determine the complete Medi Kit inventory */
   completeInventory(invData: object, proData: object) {
-    /*merge 'outOfDate' and 'products' arrays based on key*/
+    
+    /** Merge 'inventory' and 'products' based on key */
     this.allData = this.inventory.map((invItem: { product: number; }) => ({
       ...this.products.find((prodItem: { id: number; }) => (prodItem.id === invItem.product) && prodItem),
       ...invItem
     }));
   }
 
-  /* Download Medi Kit inventory as PDF */
+  /** Create PDF from HTML table and download it as Medi Kit Inventory */
   printPDF() {
     const doc = new jsPDF();
     doc.text("Medi Kit Inventory",14, 10);

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Service} from 'app/app.service';
-import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -17,7 +16,7 @@ export class ViewProductComponent {
   location: any | undefined
   locData: any
 
-  show: boolean = false
+  showInventoryById: boolean = false
   showStockAlert: boolean = false
   showOutOfDateAlert: boolean = false
   showLocationEditor: boolean = false
@@ -26,25 +25,26 @@ export class ViewProductComponent {
   outOfDate: any | []
 
   constructor(
-    private service: Service, private router : Router,
+    private service: Service, 
     ) { }
 
   ngOnInit(): void {
+    /** On init load products */
     this.service.getProducts().subscribe(data => {
       this.products = data;
       console.log(data)
       
-      /*Determine products with low stock and save them in lowStock array*/
+      /** Identify products with low stock and save them in lowStock array */
       this.lowStockSearch(this.products);
 
-      /*Determine out of date inventory and save them in outOfDate array*/
+      /** Load inventory; identify out of date inventory and save them in outOfDate array */
       this.service.getInventory().subscribe(data => {
         this.inventoryAll = data;
         console.log(data)
         this.outOfDateSearch(this.inventoryAll)
       });
 
-      /*Get actual Medi Kit location*/
+      /** Get actual Medi Kit location */
       this.service.getLocation().subscribe(data => {
         this.location = data;
         console.log('Location:')
@@ -53,12 +53,12 @@ export class ViewProductComponent {
     });
   }
 
-  /* form for updating Medi Kit Location */
+  /** Form for updating Medi Kit Location */
   locForm = new FormGroup({
     location: new FormControl('', Validators.required),
   })
   
-  /* Update Medi Kit Location */
+  /** Update Medi Kit Location */
   submit(){
     this.locData = this.locForm.value
     this.location[0].location = this.locData.location
@@ -67,14 +67,15 @@ export class ViewProductComponent {
     })
   }
 
-  /*Determine out of date inventory and save them in outOfDate array*/
+  /** Identify out of date inventory and save them in outOfDate array */
   outOfDateSearch(data: object) {
-    /*determine actual date*/
+    
+    /** Determine actual date */
     var date = new Date();
     var dateToday = date.toISOString().split('T')[0];
     console.log(dateToday);
     
-    /*find expired items*/
+    /** Find expired items */
     this.outOfDate=[],
     Object.values(data).forEach(value =>{
       if(value.expiration_date < dateToday){
@@ -83,21 +84,21 @@ export class ViewProductComponent {
     })
     console.log(this.outOfDate);
 
-    /*merge 'outOfDate' and 'products' arrays based on key*/
+    /** Merge 'outOfDate' and 'products' arrays based on key */
     this.outOfDate = this.outOfDate.map((itm: { product: number; }) => ({
       ...this.products.find((item: { id: number; }) => (item.id === itm.product) && item),
       ...itm
     }));
     console.log(this.outOfDate);
 
-    /* Show/hide expired items*/ 
+    /** Show/hide expired items alert */ 
     if(this.outOfDate.length == 0){
       this.showOutOfDateAlert = false;
     }
     else {this.showOutOfDateAlert = true;}
   }
 
-  /*Determine products with low stock and save them in lowStock array*/
+  /** Identify products with low stock and save them in lowStock array*/
   lowStockSearch(data: object) {
     this.lowStock=[];
     Object.values(data).forEach(value =>{
@@ -106,24 +107,24 @@ export class ViewProductComponent {
       }
     })
 
-    /* Show/hide low stock alert*/
+    /** Show/hide low stock alert*/
     if(this.lowStock.length == 0){
       this.showStockAlert = false;
     }
     else {this.showStockAlert = true;}
-    
-    console.log(this.lowStock);
   }
 
+  /** Delete a product type by id number and all associated inventory items */
   deleteProduct(id: number) {
     this.service.deleteProduct(id).subscribe(data => {
       console.log(data);
       this.ngOnInit();
-      /*hide viewInventoryById when product, and thus all inventory is deleted*/
-      this.show = !this.show;
+      /** Hide viewInventoryById when product, and thus all inventory is deleted*/
+      this.showInventoryById = !this.showInventoryById;
     });
   }
 
+  /** Load data to show product name and inventory items by Id */
   viewInventoryById(id: number) {
     this.service.getProduct(id).subscribe(data => {
       this.product = data;
@@ -135,6 +136,7 @@ export class ViewProductComponent {
     });
   }
 
+  /** Delete an inventory item by id number */
   deleteInventory(id: number, product: number) {
     this.service.deleteInventory(id).subscribe(data => {
       console.log(data);
@@ -143,12 +145,14 @@ export class ViewProductComponent {
     });
   }
 
-  toggleShow(): void {
-    if (this.show == false) {
-      this.show = !this.show;
+  /** Hide/show the location editor */
+  toggleShowInventoryById(): void {
+    if (this.showInventoryById == false) {
+      this.showInventoryById = !this.showInventoryById;
     }
   }
   
+  /** Hide/show the location editor */
   toggleLocationEditor() {
     this.showLocationEditor = !this.showLocationEditor;
   }

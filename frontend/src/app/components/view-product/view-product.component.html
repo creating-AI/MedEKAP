@@ -54,7 +54,7 @@
     <!--Products box-->
     <div class="shadow p-3 my-3 bg-white rounded">
       
-      <!--Add & Refresh buttons-->
+      <!--'Add Product', 'Refresh List', and 'Print Inventory' buttons-->
       <div class="d-grid gap-1 d-md-flex justify-content-md-start mb-3">
         <button type="button" class="btn btn-outline-primary shadow-sm btn-float" routerLink="/addproduct"><span class="bi bi-plus-lg"></span></button>
         <button type="button" class="btn btn-outline-primary shadow-sm btn-float" (click)="ngOnInit()"><span class="bi bi-arrow-clockwise"></span></button>
@@ -83,7 +83,7 @@
               <td>{{product.quantity_stock}}</td>
               <td>
                 <div class="d-grid gap-1 d-md-flex justify-content-md-start" data-toggle="buttons">
-                <button class="btn btn-outline-secondary btn-sm" (click)="viewInventoryById(product.id)" (click)='toggleShow()'>
+                <button class="btn btn-outline-secondary btn-sm" (click)="viewInventoryById(product.id)" (click)='toggleShowInventoryById()'>
                   <span class="bi bi-eye-fill"></span></button>
                 <button class="btn btn-outline-secondary btn-sm" routerLink="/updateproduct/{{product.id}}">
                   <span class="bi bi-pencil-fill"></span></button>
@@ -96,17 +96,17 @@
         </table>
       </div>
 
-      <!--Inventory by Id Box showing-->
-      <div *ngIf="show" class="shadow-sm p-3 mt-4 bg-light rounded">
+      <!--Inventory by Id Box-->
+      <div *ngIf="showInventoryById" class="shadow-sm p-3 mt-4 bg-light rounded">
         <div class="d-grid gap-3 d-md-flex justify-content-between mb-3">
-          <h5 *ngIf="show">{{product.name}}</h5>
+          <h5>{{product.name}}</h5>
           <button class="btn btn-outline-primary btn-sm" routerLink="/addinventory/{{product.id}}">
             <span class="bi bi-plus-lg"></span> Add more {{product.name}} to inventory</button>
         </div>
         
         <!--Table with Inventory by Id-->
-        <div *ngIf="show" class="col-md-12 overflow-auto" style="max-height: 15em;">
-          <table *ngIf="show" class="table table-hover table-responsive table-light table-bordered">
+        <div class="col-md-12 overflow-auto" style="max-height: 15em;">
+          <table class="table table-hover table-responsive table-light table-bordered">
             <thead style="position: sticky; top: 0%;">
               <tr>
                 <!--dev <th scope="col">Id</th>

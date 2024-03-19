@@ -9,12 +9,17 @@ import { Service } from 'app/app.service';
   styleUrl: './update-product.component.css'
 })
 export class UpdateProductComponent {
-
   product?: any
   data: any
 
-  constructor(private service: Service, private route: ActivatedRoute, private router : Router) { }
+  constructor(
+    private service: Service, 
+    private route: ActivatedRoute, 
+    private router : Router) { }
 
+  /** On init load product type by id and use the data to
+   * prefill the update form
+   */
   ngOnInit(): void {
     let id = this.route.snapshot.params['id'];
     this.service.getProduct(id).subscribe(data => {
@@ -28,6 +33,7 @@ export class UpdateProductComponent {
     quantity_max: new FormControl('', Validators.required)
   })
 
+  /** Get update data from form and init DB update  */
   submit(){
     this.data = this.form.value
     this.product.name = this.data.name

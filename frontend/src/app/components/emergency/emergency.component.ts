@@ -11,16 +11,15 @@ import html2canvas from 'html2canvas';
 })
 
 export class EmergencyComponent {
-  emergency: any | undefined
   case: any | undefined
   data: any
   medication: any | undefined
   products: any | undefined
+  
   showCustomEditor: boolean = false
   showActionPlan: boolean = false
   showProtocolForm: boolean = false
   showEmergencySelection: boolean = true
-  protocolMeasures: string = ''
 
   availableMed: any | []
   notAvailableMed: any | []
@@ -30,18 +29,14 @@ export class EmergencyComponent {
     ) { }
 
   ngOnInit(): void {
-    this.service.getEmergency().subscribe(data => {
-      this.emergency = data;
-      console.log(data)
-
-      this.service.getProducts().subscribe(data => {
-        this.products = data;
-        console.log(data);
-      });
+    this.service.getProducts().subscribe(data => {
+      this.products = data;
+      console.log(data);
     });
   }
 
-  printPDF() {
+  /** Create a canvas from HTML and save it as PDF */
+  printProtocolPDF() {
     let data = document.getElementById('protocol');
     console.log(data);
     if (data != null) {
@@ -55,6 +50,7 @@ export class EmergencyComponent {
     }
   }
 
+  /** Get case specific data (action plans and medication) by id */
   emergencyCase(id: number){
     this.service.getEmergencyById(id).subscribe(data => {
       this.case = data;
@@ -70,9 +66,12 @@ export class EmergencyComponent {
 
       this.availableMedicine(this.medication, this.products);
     });
+    this.setActionPlanVisible()
   }
 
-  // determine which case specific medicine is available and which not
+  /** Determine which case-specific medicine is available and which is not 
+   * by comparing predefined case-specific medicine against inventory
+   */
   availableMedicine(mediData: Object, prodData: Object){
     this.availableMed=[]
     this.notAvailableMed=[]
@@ -95,7 +94,7 @@ export class EmergencyComponent {
     console.log(this.notAvailableMed);
   }
   
-  // update custom action plan
+ /** Update the text of the custom action plan through form entry */
   form = new FormGroup({
     custom: new FormControl('', Validators.required)
   })
@@ -109,6 +108,7 @@ export class EmergencyComponent {
     })
   }
 
+  /** The remaining code shows/hides GUI elements by setting or toggling booleans */
   setActionPlanVisible() {
     this.showActionPlan = true;
   }
