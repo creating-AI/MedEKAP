@@ -38,7 +38,7 @@
                 <div class="row">
                     <div class="col-md-12 form-group mb-3">
                         <label for="quantity" class="form-label">Quantity</label>
-                        <input id="quantity" type="quantity"  formControlName="quantity" name="quantity" class="form-control" placeholder="Enter number of items" required>
+                        <input id="quantity" type="number" min="0" onkeypress="return event.charCode >= 48" formControlName="quantity" name="quantity" class="form-control" placeholder="Enter number of items" required>
                     </div>
                 </div>
 

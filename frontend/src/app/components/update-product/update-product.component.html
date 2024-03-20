@@ -35,7 +35,7 @@
         <div class="row">
           <div class="col-md-12 form-group mb-3">
             <label for="quantity_min" class="form-label">Quantity Min</label>
-            <input id="quantity_min"  formControlName="quantity_min" type="number" name="quantity_min" class="form-control" [ngModel]="product?.quantity_min" required>
+            <input id="quantity_min"  formControlName="quantity_min" type="number" min="0" onkeypress="return event.charCode >= 48" name="quantity_min" class="form-control" [ngModel]="product?.quantity_min" required>
           </div>
         </div>
 
@@ -43,7 +43,7 @@
         <div class="row">
           <div class="col-md-12 form-group mb-3">
             <label for="quantity_max" class="form-label">Quantity Max</label>
-            <input id="quantity_max"  formControlName="quantity_max" type="number" name="quantity_max" class="form-control" [ngModel]="product?.quantity_max" required>
+            <input id="quantity_max"  formControlName="quantity_max" type="number" min="0" onkeypress="return event.charCode >= 48" name="quantity_max" class="form-control" [ngModel]="product?.quantity_max" required>
           </div>
         </div>
 
