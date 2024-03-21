@@ -4,7 +4,6 @@ RUN mkdir -p /frontend
 WORKDIR /frontend
 
 RUN npm install -g @angular/cli
-RUN npm install bootstrap
 
 COPY package.json package-lock.json ./
 
@@ -14,4 +13,4 @@ COPY . /frontend/
 
 EXPOSE 4200
 
-CMD npm run ng serve
+CMD ["ng", "serve", "--host", "0.0.0.0"]
