@@ -63,7 +63,7 @@
 
       <!--Table to display all Products-->
       <div class="col-md-12 overflow-auto" style="max-height: 20em;">
-        <table class="table table-hover table-responsive table-bordered">
+        <table class="table table-hover table-responsive table-bordered" style="vertical-align: middle;">
           <thead style="position: sticky; top: 0%;">
             <tr>
               <!--dev <th scope="col">Id</th> -->
@@ -80,7 +80,11 @@
               <td>{{product.name}}</td>
               <td>{{product.quantity_min}}</td>
               <td>{{product.quantity_max}}</td>
-              <td>{{product.quantity_stock}}</td>
+              <td>
+                <div class="progress">
+                  <div class="progress-bar bg-secondary active" role="progressbar" [style.width]="(product.quantity_stock/product.quantity_max*100)+'%'" [attr.aria-valuemin]="product.quantity_min" [attr.aria-valuemax]="product.quantity_max" >{{product.quantity_stock}}</div>
+                </div>
+              </td>
               <td>
                 <div class="d-grid gap-1 d-md-flex justify-content-md-start" data-toggle="buttons">
                 <button class="btn btn-outline-secondary btn-sm" (click)="viewInventoryById(product.id)" (click)='toggleShowInventoryById()'>
@@ -106,7 +110,7 @@
         
         <!--Table with Inventory by Id-->
         <div class="col-md-12 overflow-auto" style="max-height: 15em;">
-          <table class="table table-hover table-responsive table-light table-bordered">
+          <table class="table table-hover table-responsive table-light table-bordered" style="vertical-align: middle;">
             <thead style="position: sticky; top: 0%;">
               <tr>
                 <!--dev <th scope="col">Id</th>
