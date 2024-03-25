@@ -4,13 +4,11 @@ services:
     build: ./frontend
     ports:
       - "4200:4200"
-    depends_on:
+    links:
       - backend
 
   backend:
     build: ./backend
-    links:
-      - "frontend"
     volumes:
       - ./backend/PSE.sqlite3:/backend/PSE.sqlite3'
     ports:
