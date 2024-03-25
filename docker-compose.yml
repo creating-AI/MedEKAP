@@ -1,14 +1,18 @@
 version: "3.8"
 services:
   frontend:
-    build: ./frontend
+    build: 
+      context: ./frontend
+      network: host
     ports:
       - "4200:4200"
-    links:
+    depends_on:
       - backend
 
   backend:
-    build: ./backend
+    build: 
+      context: ./backend
+      network: host
     volumes:
       - ./backend/PSE.sqlite3:/backend/PSE.sqlite3'
     ports:
