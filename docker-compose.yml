@@ -11,8 +11,6 @@ services:
 
   backend:
     build: ./backend
-    links:
-      - "frontend"
     volumes:
       - ./backend/PSE.sqlite3:/backend/PSE.sqlite3'
     ports:
