@@ -12,22 +12,22 @@ import { Medication } from './Medication';
 
 export class Service {
 
-  /** URLs used to access the backend for local docker composer use */
+  /** URLs used to access the backend for local docker composer use 
   private url_products: string = 'http://localhost:8000/api/products/';
   private url_inventory: string = 'http://localhost:8000/api/inventory/';
   private url_inventorylistbyid: string = 'http://localhost:8000/api/inventorylistbyid/';
   private url_location: string = 'http://localhost:8000/api/location/';
   private url_emergency: string = 'http://localhost:8000/api/emergency/';
   private url_medicationlistbyid: string = 'http://localhost:8000/api/medicationlistbyid/';
+*/
+  /** URLs used to access the backend for AWS EC2 use  */
+  private url_products: string = 'http://52.58.236.236:8000/api/products/';
+  private url_inventory: string = 'http://52.58.236.236:8000/api/inventory/';
+  private url_inventorylistbyid: string = 'http://52.58.236.236:8000/api/inventorylistbyid/';
+  private url_location: string = 'http://52.58.236.236:8000/api/location/';
+  private url_emergency: string = 'http://52.58.236.236:8000/api/emergency/';
+  private url_medicationlistbyid: string = 'http://52.58.236.236:8000/api/medicationlistbyid/';
 
-  /** URLs used to access the backend for AWS EC2 use
-  private url_products: string = 'http://18.185.47.68:8000/api/products/';
-  private url_inventory: string = 'http://18.185.47.68:8000/api/inventory/';
-  private url_inventorylistbyid: string = 'http://18.185.47.68:8000/api/inventorylistbyid/';
-  private url_location: string = 'http://18.185.47.68:8000/api/location/';
-  private url_emergency: string = 'http://18.185.47.68:8000/api/emergency/';
-  private url_medicationlistbyid: string = 'http://18.185.47.68:8000/api/medicationlistbyid/';
-  */
 
   constructor(private http: HttpClient) { }
 
